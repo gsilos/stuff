@@ -1,0 +1,39 @@
+# lvm
+# Monta disco
+lvcreate -L 1g -n teste ubuntu-vg
+mkfs.ext4 /dev/ubuntu-vg/teste
+mount /dev/ubuntu-vg/teste /mnt
+# Producao
+echo primeiro > /mnt/arquivo
+lvs
+# Cria snapshot
+lvcreate -s -L 1g -n testes ubuntu-vg/teste
+lvs
+# Ja pode fazer alteracoes. Tens o limite maximo de 1g para brincar
+# se passar de 1GB ai da merda.
+echo segundo > /mnt/arquivo
+mkdir /mnt1
+mount /dev/ubuntu-vg/testes /mnt1
+ls
+# Tens acesso ao passado.
+cat arquivo
+pvs
+vgs
+lvs
+lvdisplay -m testes
+lvdisplay -l testes
+man lvdisplay
+lvdisplay -m teste
+# Faz rollback para o passado
+lvconvert --merge ubuntu-vg/testes
+umount /mnt
+mount /dev/ubuntu-vg/teste /mnt
+umount /mnt
+lvconvert --merge ubuntu-vg/testes
+lvchange -an ubuntu-vg/teste
+lvchange -a ubuntu-vg/teste
+lvchange -ay ubuntu-vg/teste
+mount /dev/ubuntu-vg/teste /mnt
+cd /mnt
+cat arquivo
+lvs
