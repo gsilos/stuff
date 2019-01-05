@@ -68,10 +68,12 @@ while playlistitems_list_request:
 	minutos = minutos + m
 	segundos = segundos + s
 	contador = contador + 1
-            
+
     playlistitems_list_request = youtube.playlistItems().list_next(playlistitems_list_request,
                                                                    playlistitems_list_response)
 
 m, s = divmod(segundos, 60)
 h, m = divmod(minutos, 60)
 print "Total de tempo da playlist -> %d:%02d:%02d" % (h, m, s)
+
+# adding a comment at the end of the code to test pull request
